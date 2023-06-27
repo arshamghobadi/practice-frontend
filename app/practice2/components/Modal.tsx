@@ -5,7 +5,7 @@ import Button from './Button';
 
 interface ModalProps {
   onSubmit: () => void;
-  title?: string;
+
   body?: React.ReactElement;
   footer?: React.ReactElement;
   actionLabel: string;
@@ -16,7 +16,7 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({
   onSubmit,
-  title,
+
   disabled,
   body,
   footer,
@@ -38,13 +38,9 @@ const Modal: React.FC<ModalProps> = ({
   }, [disabled, secondartAction]);
   return (
     <>
-      <div className=" relative  bg-white m-4 -top-20 p-4">
-        <div>
-          asd
-          {title}
-        </div>
-        <div>{body}asd</div>
-        <div>{footer}asd</div>
+      <div className=" relative  bg-white m-4 -top-20 p-4 rounded-lg">
+        <div>{body}</div>
+        <div>{footer}</div>
       </div>
       <div className="flex p-4 items-center justify-between gap-8 bg-white">
         <Button
