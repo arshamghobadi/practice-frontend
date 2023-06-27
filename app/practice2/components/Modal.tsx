@@ -46,7 +46,15 @@ const Modal: React.FC<ModalProps> = ({
         <div>{body}asd</div>
         <div>{footer}asd</div>
       </div>
-      <Button label={actionLabel} disable={disabled} onClick={handleSubmit} />
+      <div className="flex p-4 items-center justify-between gap-8 bg-white">
+        <Button
+          outline
+          label={secondartActionLabel}
+          disable={disabled}
+          onClick={handleSecondaryAction}
+        />
+        <Button label={actionLabel} disable={disabled} onClick={handleSubmit} />
+      </div>
     </>
   );
 };
