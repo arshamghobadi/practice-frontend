@@ -5,7 +5,7 @@ import Button from './Button';
 
 interface ModalProps {
   onSubmit: () => void;
-  step: any;
+  step: number;
   body?: React.ReactElement;
   footer?: React.ReactElement;
   actionLabel: string;
