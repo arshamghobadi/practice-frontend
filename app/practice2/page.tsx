@@ -3,8 +3,10 @@ import Image from 'next/image';
 import React, { useMemo, useState } from 'react';
 import Modal from './components/Modal';
 import Header from './components/Header';
-import Input from './components/Input';
+
 import InfoInput from './components/InfoInput';
+import { FieldValues, useForm, SubmitHandler } from 'react-hook-form';
+import { log } from 'console';
 
 enum Steps {
   info,
@@ -14,7 +16,31 @@ enum Steps {
 }
 export default function Parctice2() {
   const [step, setStep] = useState(Steps.info);
-
+  console.log(step);
+  const {
+    register,
+    watch,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<FieldValues>({
+    defaultValues: {
+      name: '',
+      email: '',
+      number: '',
+    },
+  });
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    onNext();
+  };
+  const setCustomValue = (id: string, value: any) => {
+    setValue(id, value, {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+  };
   const onBack = () => {
     setStep((value) => value - 1);
   };
@@ -38,7 +64,7 @@ export default function Parctice2() {
     <div className="flex flex-col space-y-3">
       <Header
         h2="personal Info"
-        label="pLease provide your name, email address,and phone number"
+        label="please provide your name, email address,and phone number"
       />
       <InfoInput label="Name" placeholder="e.g stephen King" />
       <InfoInput
@@ -49,6 +75,17 @@ export default function Parctice2() {
       <InfoInput label="Phone Number" placeholder="e.g. +1 234 567 890" />
     </div>
   );
+
+  if (step === Steps.plan) {
+    bodyContent = (
+      <div className="flex flex-col space-y-3">
+        <Header
+          h2="personal Info"
+          label="please provide your name, email address,and phone number"
+        />
+      </div>
+    );
+  }
   return (
     <div className=" h-screen bg-gray-200 relative">
       <div>
@@ -60,29 +97,16 @@ export default function Parctice2() {
             width={500}
             height={100}
           />
-          <div className="flex justify-between w-44 absolute  top-16 right-[200px]">
-            <div className=" w-8 h-8 flex z-10  bg-transparent  items-center justify-center border border-white rounded-full">
-              1
-            </div>
-            <div className=" w-8 h-8 flex z-10  bg-transparent  items-center justify-center border border-white rounded-full">
-              2
-            </div>
-            <div className=" w-8 h-8 flex z-10  bg-transparent  items-center justify-center border border-white rounded-full">
-              3
-            </div>
-            <div className=" w-8 h-8 flex z-10  bg-transparent  items-center justify-center border border-white rounded-full">
-              4
-            </div>
-          </div>
         </div>
-        {/* <Modal
-        
-          //   onSubmit={handleSubmit(onSubmit)}
+        <Modal
+          step={step}
+          onSubmit={handleSubmit(onSubmit)}
           actionLabel={actionLabel}
           secondartActionLabel={secondaryActionLabel}
           secondartAction={step === Steps.info ? undefined : onBack}
           body={bodyContent}
-        /> */}
+          selected={step}
+        />
       </div>
     </div>
   );
