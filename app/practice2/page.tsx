@@ -8,6 +8,7 @@ import InfoInput from './components/InfoInput';
 import { FieldValues, useForm, SubmitHandler } from 'react-hook-form';
 
 import PlanInput from './components/PlanInput';
+import AddInput from './components/AddInput';
 
 enum Steps {
   info,
@@ -41,7 +42,6 @@ export default function Parctice2() {
     },
   });
   const items = watch('item');
-  console.log(items);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     onNext();
@@ -114,7 +114,7 @@ export default function Parctice2() {
           image="/images/practice-2/icon-advanced.svg"
           alt="advance image"
           plan={12}
-          planDate="mo"
+          planDate={isOn ? 'yr' : 'mo'}
           yearPLan={120}
         />
         <PlanInput
@@ -126,7 +126,7 @@ export default function Parctice2() {
           alt="arcade image"
           plan={15}
           yearPLan={150}
-          planDate="mo"
+          planDate={isOn ? 'yr' : 'mo'}
         />
         <div className="flex items-center justify-evenly bg-blue-50 p-3">
           <div>Monthly</div>
@@ -135,6 +135,34 @@ export default function Parctice2() {
           </div>
           <div>Yearly</div>
         </div>
+      </div>
+    );
+  }
+  if (step === Steps.add) {
+    bodyContent = (
+      <div className="flex flex-col space-y-7">
+        <Header
+          h2="Pick add-ons"
+          label="Add-ons help enhance your gaming experience"
+        />
+        <AddInput
+          service="Online sevice"
+          discrip="Access to miltiplayer games"
+          plan={isOn ? 10 : 1}
+          monthly={isOn}
+        />
+        <AddInput
+          service="Larger storage"
+          discrip="Rxtra 1TB of cloud save"
+          plan={isOn ? 20 : 2}
+          monthly={isOn}
+        />
+        <AddInput
+          service="Customizable profile"
+          discrip="custom theme on your profile"
+          plan={isOn ? 20 : 2}
+          monthly={isOn}
+        />
       </div>
     );
   }
