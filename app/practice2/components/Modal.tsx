@@ -1,4 +1,4 @@
-'use clinet';
+'use client';
 import React, { useCallback } from 'react';
 
 import Button from './Button';
@@ -55,14 +55,14 @@ const Modal: React.FC<ModalProps> = ({
         </div>
         <div
           className={`w-8 h-8 flex z-10  items-center justify-center border border-white rounded-full
-            ${step === 3 ? ' bg-cyan-100' : ' bg-transparent'}
+            ${step === 2 ? ' bg-cyan-100' : ' bg-transparent'}
             `}
         >
           3
         </div>
         <div
           className={`w-8 h-8 flex z-10  items-center justify-center border border-white rounded-full
-            ${step === 4 ? ' bg-cyan-100' : ' bg-transparent'}
+            ${step === 3 ? ' bg-cyan-100' : ' bg-transparent'}
             `}
         >
           4

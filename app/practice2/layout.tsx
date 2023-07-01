@@ -1,6 +1,5 @@
 'use client';
 import { Roboto } from 'next/font/google';
-import Modal from './components/Modal';
 
 const inter = Roboto({ subsets: ['latin'], weight: '500' });
 

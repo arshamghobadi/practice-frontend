@@ -9,6 +9,7 @@ import { FieldValues, useForm, SubmitHandler } from 'react-hook-form';
 
 import PlanInput from './components/PlanInput';
 import AddInput from './components/AddInput';
+import FinishUp from './components/FinishUp';
 
 enum Steps {
   info,
@@ -19,7 +20,7 @@ enum Steps {
 export default function Parctice2() {
   const [step, setStep] = useState(Steps.info);
   const [isOn, setIsOn] = useState(false);
-  console.log(isOn);
+
   const toggleSwitch = () => setIsOn(!isOn);
   const spring = {
     type: 'spring',
@@ -30,19 +31,29 @@ export default function Parctice2() {
     register,
     watch,
     setValue,
+    getValues,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<FieldValues>({
     defaultValues: {
       name: '',
+      arcade: '',
       email: '',
       number: '',
       item: '',
+      service: '',
+      service1: '',
+      service2: '',
     },
   });
   const items = watch('item');
 
+  const serviceValue: string[] = getValues(['service', 'service1', 'service2']);
+  console.log(serviceValue);
+
+  const getPlan = getValues('item');
+  console.log(getPlan);
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     onNext();
   };
@@ -130,7 +141,7 @@ export default function Parctice2() {
         />
         <div className="flex items-center justify-evenly bg-blue-50 p-3">
           <div>Monthly</div>
-          <div className="switch" data-isOn={isOn} onClick={toggleSwitch}>
+          <div className="switch" data-ison={isOn} onClick={toggleSwitch}>
             <motion.div className="handle" layout transition={spring} />
           </div>
           <div>Yearly</div>
@@ -146,22 +157,69 @@ export default function Parctice2() {
           label="Add-ons help enhance your gaming experience"
         />
         <AddInput
+          check={false}
+          onClick={(item) => setCustomValue('service', item)}
           service="Online sevice"
           discrip="Access to miltiplayer games"
           plan={isOn ? 10 : 1}
           monthly={isOn}
         />
         <AddInput
+          onClick={(item) => setCustomValue('service1', item)}
+          check={false}
           service="Larger storage"
           discrip="Rxtra 1TB of cloud save"
           plan={isOn ? 20 : 2}
           monthly={isOn}
         />
         <AddInput
+          onClick={(item) => setCustomValue('service2', item)}
+          check={false}
           service="Customizable profile"
           discrip="custom theme on your profile"
           plan={isOn ? 20 : 2}
           monthly={isOn}
+        />
+      </div>
+    );
+  }
+  function monthlyPriceHandler(isOn: boolean, getPlan: string) {
+    switch (getPlan) {
+      case 'Arcade':
+        if (isOn) {
+          return 90;
+        } else {
+          return 9;
+        }
+      case 'advance':
+        if (isOn) {
+          return 120;
+        } else {
+          return 12;
+        }
+      case 'pro':
+        if (isOn) {
+          return 150;
+        } else {
+          return 15;
+        }
+      default:
+        return 0; // Return a default value if the plan is not recognized
+    }
+  }
+
+  if (step === Steps.finish) {
+    bodyContent = (
+      <div className="flex flex-col space-y-7">
+        <Header
+          h2="Finishing"
+          label="Double-check everything looks ok before confirming"
+        />
+        <FinishUp
+          yearly={isOn}
+          plan={getPlan}
+          monthlyPrice={monthlyPriceHandler(isOn, getPlan)}
+          serviceValue={serviceValue}
         />
       </div>
     );
@@ -171,6 +229,7 @@ export default function Parctice2() {
       <div>
         <div>
           <Image
+            priority
             className="w-full"
             src="/images/practice-2/bg-sidebar-mobile.svg"
             alt="mobile pic"

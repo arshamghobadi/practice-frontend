@@ -1,4 +1,5 @@
 'use client';
+
 import Image from 'next/image';
 interface PlanInput {
   yearPLan: number;
@@ -30,7 +31,7 @@ const PlanInput: React.FC<PlanInput> = ({
       ${selected ? ' bg-blue-100' : ' bg-white'}
       `}
     >
-      <Image src={image} alt={alt} width={45} height={45} />
+      <Image priority src={image} alt={alt} width={45} height={45} />
       <div className="">
         <p>{item}</p>
         <span>

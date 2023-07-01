@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+'use client';
 
 interface AddInputProps {
+  onClick: (value: string) => void;
   service: string;
   discrip: string;
   plan: number;
   monthly: boolean;
+  check: boolean;
 }
 const AddInput: React.FC<AddInputProps> = ({
   service,
   discrip,
   plan,
   monthly,
+  onClick,
+  check,
 }) => {
-  const [check, setCheck] = useState(false);
-  console.log(check);
-
   return (
     <div
       className={`flex items-center px-4 py-2 rounded-lg justify-between
@@ -23,9 +24,7 @@ const AddInput: React.FC<AddInputProps> = ({
   `}
     >
       <input
-        onClick={(e: React.MouseEvent<HTMLInputElement, MouseEvent>) =>
-          setCheck(!!e.currentTarget.checked)
-        }
+        onClick={() => onClick(service)}
         className=" w-6 h-6 rounded-3xl"
         type="checkbox"
       />
